@@ -1,5 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
+from typing import Literal
 
 @dataclass
 class Mana:
@@ -10,4 +11,5 @@ class Mana:
     red: int = 0
     green: int = 0
     colorless: int = 0
+    variables: Literal["X"] | None = None
 

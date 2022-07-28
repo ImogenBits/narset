@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from narset.cost import Cost
-from narset.parser import Lit, Num
+from narset.tokenizer import Word, Num
 
-KWArgs = Cost | Num | Lit
+KWArgs = Cost | Num | Word
 
 keywords = {
     "vigilance": [],
