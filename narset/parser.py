@@ -28,7 +28,10 @@ class Sym(Token):
 EM = Sym("—")
 
 
-
+class Mana(Token):
+    def __init__(self, entry: str) -> None:
+        super().__init__()
+        self.entry = entry
 
 
 
@@ -37,11 +40,19 @@ def tokenize(text: str) -> list[list[Token]]:
     for line in text.splitlines():
         line_out = []
         out.append(line_out)
-        for word in nltk.word_tokenize(line):
-            if word.isdigit():
-                line_out.append(Num(int(word)))
-            elif word in Sym.symbols:
-                line_out.append(Sym(word))
-            else:
-                line_out.append(Word(word))
+        try:
+            words = iter(nltk.word_tokenize(line))
+            while True:
+                word = next(words)
+                if word.isdigit():
+                    line_out.append(Num(int(word)))
+                elif word in Sym.symbols:
+                    line_out.append(Sym(word))
+                elif word == "{":
+                    line_out.append(Mana(next(words)))
+                    next(words)
+                else:
+                    line_out.append(Word(word))
+        except StopIteration:
+            pass
     return out
